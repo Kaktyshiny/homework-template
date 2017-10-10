@@ -23,7 +23,19 @@ def shuffle_field():
     :return: list with 16 randomly shuffled tiles,
     one of which is a empty space.
     """
-    pass
+    field = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 'x', ]
+    for i in range(0, 1000):
+        # Делаем 1000 рандомных шагов, чтобы помешать поле
+        move = random.choice([-4, 4, -1, 1])
+        field_status = perform_move(field, move)
+        if field_status is True:
+            field = field_status
+    return(field)
+
+    # Если делать через функйию random.shuffle:
+    #
+    # random.shuffle(field)
+    # return(field)
 
 
 def print_field(field):
@@ -32,7 +44,11 @@ def print_field(field):
     :param field: current field state to be printed.
     :return: None
     """
-    pass
+    line = [0, 0, 0, 0]
+    for i in range(4):
+        for j in range(4):
+            line[j] = field[i * 4 + j]
+        print(line)
 
 
 def is_game_finished(field):
@@ -41,7 +57,10 @@ def is_game_finished(field):
     :param field: current field state.
     :return: True if the game is finished, False otherwise.
     """
-    pass
+    if field == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 'x', ]:
+        return(True)
+    else:
+        return(False)
 
 
 def perform_move(field, key):
@@ -52,7 +71,19 @@ def perform_move(field, key):
     :return: new field state (after the move).
     :raises: IndexError if the move can't me done.
     """
-    pass
+    for i in range(len(field)):
+        if field[i] == EMPTY_MARK:
+            index = i
+    if (index + key >= 0) and (index + key < 16):
+        if (key == 1 or key == -1) and \
+                (((index + key) % 4 == 0) and ((index % 4 == 3))) or \
+                (((index + key) % 4 == 3) and ((index % 4 == 0))):
+            return(field)
+        else:
+            field[index], field[index + key] = field[index + key], field[index]
+            return(field)
+    else:
+        return(False)
 
 
 def handle_user_input():
@@ -64,7 +95,10 @@ def handle_user_input():
         'd' - right
     :return: <str> current move.
     """
-    pass
+    user_input = input('Ваш ход:')
+    while user_input not in MOVES:
+        user_input = input('Ходить клавишами W, A, S и D! Повторите ваш ход:')
+    return(MOVES[user_input])
 
 
 def main():
@@ -73,11 +107,24 @@ def main():
     It also calls other methods.
     :return: None
     """
-    pass
+    print('Добро пожаловать в уникальную игру! Итааак... мы начинаем!')
+    print('Мы перемешали поле и сейчас оно выведется вам на экран!')
+    current_field = shuffle_field()
+    print('Знаком x обозначена пустая клетка')
+    print_field(current_field)
+    while not(is_game_finished(current_field)):
+        user_moving = handle_user_input()
+        field_status = perform_move(current_field, user_moving)
+        if field_status is False:
+            print('Вы не можете так походить!')
+        else:
+            current_field = field_status
+            print_field(current_field)
+    print('Поздравляем! ВЫ ВЫИГРАЛИ СУПЕР ИГРУ')
 
 
 if __name__ == '__main__':
-    # See what this means:
-    # http://stackoverflow.com/questions/419163/what-does-if-name-main-do
-
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('shutting down')
