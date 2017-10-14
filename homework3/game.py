@@ -26,7 +26,7 @@ def shuffle_field():
     field = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 'x', ]
     for i in range(0, 1000):
         # Делаем 1000 рандомных шагов, чтобы помешать поле
-        move = random.choice([-4, 4, -1, 1])
+        move = random.choice(list(MOVES.keys()))
         field_status = perform_move(field, move)
         if field_status is True:
             field = field_status
@@ -71,6 +71,7 @@ def perform_move(field, key):
     :return: new field state (after the move).
     :raises: IndexError if the move can't me done.
     """
+    key = MOVES[key]
     for i in range(len(field)):
         if field[i] == EMPTY_MARK:
             index = i
@@ -95,10 +96,10 @@ def handle_user_input():
         'd' - right
     :return: <str> current move.
     """
-    user_input = input('Ваш ход:')
-    while user_input not in MOVES:
-        user_input = input('Ходить клавишами W, A, S и D! Повторите ваш ход:')
-    return(MOVES[user_input])
+    move = ''
+    while move not in MOVES:
+        move = input('Ходить клавишами W, A, S и D! Повторите ваш ход:')
+    return move
 
 
 def main():
