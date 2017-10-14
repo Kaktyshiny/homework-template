@@ -4,11 +4,9 @@
 class Storage(object):  # storage = Storge()
     """
     Singleton storage.
-
     Read more about singleton design pattern:
     https://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
     https://en.wikipedia.org/wiki/Singleton_pattern
-
     It is used to emulate in-memory storage.
     It should be replaced with a database in a real application.
     """
@@ -40,11 +38,7 @@ class BaseItem(object):
 
 class ToDoItem(BaseItem):
     def __str__(self):
-        if self.done:
-            done = '+'
-        else:
-            done = '-'
-        return '{} ToDo: {}'.format(done, self.heading)
+        return 'ToDo: {}'.format(self.heading)
 
     @classmethod
     def construct(cls):
@@ -58,12 +52,7 @@ class ToBuyItem(BaseItem):
         self.price = price
 
     def __str__(self):
-        if self.done:
-            done = '+'
-        else:
-            done = '-'
-        return '{} ToBuy: {} for {}'.format(
-            done,
+        return 'ToBuy: {} for {}'.format(
             self.heading,
             self.price,
         )
@@ -73,26 +62,3 @@ class ToBuyItem(BaseItem):
         heading = input('Input heading: ')
         price = input('Input price: ')
         return cls(heading, price)
-
-
-class ToReadItem(BaseItem):
-    def __init__(self, heading, url):
-        super().__init__(heading)
-        self.url = url
-
-    def __str__(self):
-        if self.done:
-            done = '+'
-        else:
-            done = '-'
-        return '{} ToRead: {} {}'.format(
-            done,
-            self.heading,
-            self.url,
-        )
-
-    @classmethod
-    def construct(cls):
-        heading = input('Input heading: ')
-        url = input('Input url: ')
-        return cls(heading, url)
