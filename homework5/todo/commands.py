@@ -112,6 +112,7 @@ class DoneCommand(BaseCommand):
 
         print('{}'.format(str(selection_item)))
 
+
 class UndoneCommand(BaseCommand):
     @property
     def label(self) -> str:

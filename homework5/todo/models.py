@@ -41,9 +41,9 @@ class BaseItem(object):
 class ToDoItem(BaseItem):
     def __str__(self):
         if self.done:
-            done = "+"
+            done = '+'
         else:
-            done = "-"
+            done = '-'
         return '{} ToDo: {}'.format(done, self.heading)
 
     @classmethod
@@ -59,9 +59,9 @@ class ToBuyItem(BaseItem):
 
     def __str__(self):
         if self.done:
-            done = "+"
+            done = '+'
         else:
-            done = "-"
+            done = '-'
         return '{} ToBuy: {} for {}'.format(
             done,
             self.heading,
@@ -76,15 +76,15 @@ class ToBuyItem(BaseItem):
 
 
 class ToReadItem(BaseItem):
-    def __init__(self,heading,url):
+    def __init__(self, heading, url):
         super().__init__(heading)
         self.url = url
 
     def __str__(self):
         if self.done:
-            done = "+"
+            done = '+'
         else:
-            done = "-"
+            done = '-'
         return '{} ToRead: {} {}'.format(
             done,
             self.heading,
