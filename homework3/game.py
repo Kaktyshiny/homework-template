@@ -29,7 +29,7 @@ def shuffle_field():
 
     allowed_moves = list(MOVES.keys())
     # messed up it
-    for i in range(1000):
+    for _i in range(1000):
         try:
             # emulate allowed random moves, so it's always be solvable
             rand_key = random.choice(allowed_moves)
