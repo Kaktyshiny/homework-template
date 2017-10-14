@@ -71,20 +71,20 @@ def perform_move(field, key):
     :return: new field state (after the move).
     :raises: IndexError if the move can't me done.
     """
-    key = MOVES[key]
-    for i in range(len(field)):
-        if field[i] == EMPTY_MARK:
-            index = i
-    if (index + key >= 0) and (index + key < 16):
-        if (key == 1 or key == -1) and \
-                (((index + key) % 4 == 0) and ((index % 4 == 3))) or \
-                (((index + key) % 4 == 3) and ((index % 4 == 0))):
-            return(field)
-        else:
-            field[index], field[index + key] = field[index + key], field[index]
-            return(field)
-    else:
-        return(False)
+    mark_position = field.index(EMPTY_MARK)
+    next_mark_position = mark_position + MOVES[key]
+    if not (0 < next_mark_position < len(field)):
+        raise IndexError()
+    # left move restrictions
+    if mark_position in [0, 4, 8, 12] and key == 'a':
+        raise IndexError()
+    # right move restrictions
+    if mark_position in [3, 7, 11, 15] and key == 'd':
+        raise IndexError()
+    field_new = list(field)
+    field_new[mark_position], field_new[next_mark_position] = \
+        field_new[next_mark_position], field_new[mark_position]
+    return field_new
 
 
 def handle_user_input():
