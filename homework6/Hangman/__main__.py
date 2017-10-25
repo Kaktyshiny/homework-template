@@ -8,6 +8,7 @@ from Hangman.hangman_image import hangman_image
 with open('Hangman/words.json', 'r', encoding='utf-8') as fh:
     dictionary = json.load(fh)['words']
 
+
 class Game(object):
     def __init__(self, word):
         self.word = word
@@ -31,8 +32,7 @@ class Game(object):
         flag = False
         for i in range(self.len):
             if self.word[i] == letter:
-                self.solving = self.solving[:i] + letter \
-                            + self.solving[i + 1:]
+                self.solving = self.solving[:i] + letter + self.solving[i + 1:]
                 flag = True
                 self.rights += 1
         if flag:
@@ -115,14 +115,13 @@ def game_logic(current_game):
 
 
 def clear_console():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def main():
+
     clear_console()
-
     print('Добро пожаловать!')
-
 
     while True:
         try:
@@ -140,7 +139,7 @@ def main():
                 current_wins_two = 0
                 current_game_number = 0
 
-                while current_wins_one < 2 and  current_wins_two < 2:
+                while current_wins_one < 2 and current_wins_two < 2:
                     if current_game_number % 2 == 0:
                         word = Game(input('Первый игрок '
                                           'загадывает слово: ').lower())
