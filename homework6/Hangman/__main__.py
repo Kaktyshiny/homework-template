@@ -1,6 +1,7 @@
-import os
 import json
+import os
 import random
+
 from Hangman.hangman_image import hangman_image
 
 # Закидываем в словарь слова
@@ -12,7 +13,7 @@ class Game(object):
         self.word = word
         self.len = len(word)
         self.previous = []
-        self.solving = str('_'*self.len)
+        self.solving = str('_' * self.len)
         self.stage = 0
         self.rights = 0
 
@@ -31,7 +32,7 @@ class Game(object):
         for i in range(self.len):
             if self.word[i] == letter:
                 self.solving = self.solving[:i] + letter \
-                               + self.solving[i + 1:]
+                            + self.solving[i + 1:]
                 flag = True
                 self.rights += 1
         if flag:
@@ -60,6 +61,7 @@ class Game(object):
             return 1
         return False
 
+
 def is_english_letter(letter):
     '''
     Проверяем, что буква английская
@@ -69,6 +71,7 @@ def is_english_letter(letter):
     if letter >= 'a' and letter <= 'z':
         return True
     return False
+
 
 def game_logic(current_game):
     '''
@@ -111,11 +114,12 @@ def game_logic(current_game):
         return True
 
 
+def clear_console():
+    os.system('cls' if os.name=='nt' else 'clear')
+
+
 def main():
-    try:
-        os.system('clear')
-    except:
-        os.system('os')
+    clear_console()
 
     print('Добро пожаловать!')
 
@@ -146,10 +150,7 @@ def main():
                             continue
                         if len(word.word) == 0:
                             continue
-                        try:
-                            os.system('clear')
-                        except:
-                            os.system('os')
+                        clear_console()
                         print('Первый игрок загадал вам слово')
 
                         if game_logic(word):
@@ -163,10 +164,7 @@ def main():
                             continue
                         if len(word.word) == 0:
                             continue
-                        try:
-                            os.system('clear')
-                        except:
-                            os.system('os')
+                        clear_console()
                         print('Второй игрок загадал вам слово')
 
                         if game_logic(word):
@@ -185,7 +183,8 @@ def main():
         except IndexError:
             print('Ошибка: Вводить можно только числа 1, 2 или 3')
         except ValueError:
-            print ('Ошибка: Вводить можно только числа!')
+            print('Ошибка: Вводить можно только числа!')
+
 
 if __name__ == '__main__':
         try:
