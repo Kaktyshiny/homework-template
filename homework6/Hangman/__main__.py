@@ -133,7 +133,7 @@ def main():
                                      '\n\rВаш ответ: '))
             if type_of_game == 1:
                 current_game_number = 0
-                current_wins_your  = 0
+                current_wins_your = 0
                 current_wins_comp = 0
                 current_stats = 0
                 current_stats_rights = 0
@@ -181,8 +181,9 @@ def main():
                         continue
                     clear_console()
                     another_player = (int(current_game_number) + 1) % 2 + 1
-                    print('Игрок №', current_player, ' загадал вам слово.'
-                            '\n\r Игрок №', another_player, 'отгадывает слово.')
+                    print('Игрок №', current_player,
+                          ' загадал вам слово.\n\r Игрок №',
+                          another_player, 'отгадывает слово.')
 
                     if game_logic(word):
                         if current_player == 1:
@@ -203,12 +204,16 @@ def main():
                         current_stats_two += len(word.previous)
                         current_stats_rights_two += word.rights
 
-                    print('\n\rПо итогам предыдуших игр статистика первого игрока:\n\r'
-                          '    Угаданных букв:', current_stats_rights_one, '\n\r'
-                          '    Количество попыток:', current_stats_one)
-                    print('\n\rПо итогам предыдуших игр статистика второго игрока:\n\r'
-                          '    Угаданных букв:', current_stats_rights_two, '\n\r'
-                          '    Количество попыток:', current_stats_two)
+                    print('\n\rПо итогам предыдуших игр статистика '
+                          'первого игрока:\n\r    Угаданных букв:',
+                          current_stats_rights_one,
+                          '\n\r    Количество попыток:',
+                          current_stats_one)
+                    print('\n\rПо итогам предыдуших игр статистика второго '
+                          'игрока:\n\r    Угаданных букв:',
+                          current_stats_rights_two,
+                          '\n\r    Количество попыток:',
+                          current_stats_two)
 
                     current_game_number += 1
                     print('Текущий счет:', current_wins_one,
