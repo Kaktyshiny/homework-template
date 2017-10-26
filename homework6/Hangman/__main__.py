@@ -76,13 +76,13 @@ def is_english_letter(letter):
 def game_logic(current_game):
     '''
     Запускает игру с заданным словом
-    :param word: загаданное слово
+    :param word: загаданное слово в виде объекта класса game
     :return: True - если выиграл, False - если проиграл
     '''
     print('\n\rИгра начинается!\n\r', current_game.print_image())
 
     while not current_game.is_game_over():
-        print('\n\rЗагаданное слово: ', current_game)
+        print('\n\rЗагаданное слово:', current_game)
         current_letter = input(' Введите букву: ')
 
         if len(current_letter) != 1:
@@ -103,12 +103,13 @@ def game_logic(current_game):
             print(current_game.print_image())
 
     if current_game.is_game_over() == -1:
-        print('\r\nВы проиграли')
+        print('\r\nВы проиграли! Загаданное слово:', current_game.word)
         print('\r\nВы угадали', current_game.rights, 'букв(ы) за ',
               len(current_game.previous), 'попыток')
         return False
     if current_game.is_game_over() == 1:
-        print('\r\nВы выиграли')
+        print('\n\rЗагаданное слово:', current_game.word)
+        print('\r\nВы выиграли!')
         print('\r\nВы угадали', current_game.rights, 'букв(ы) за ',
               len(current_game.previous), 'попыток')
         return True
@@ -131,49 +132,94 @@ def main():
                                      '\n\r 3. Выйти'
                                      '\n\rВаш ответ: '))
             if type_of_game == 1:
-                word = Game(random.choice(dictionary))
-                game_logic(word)
+                current_game_number = 0
+                current_wins_your  = 0
+                current_wins_comp = 0
+                current_stats = 0
+                current_stats_rights = 0
+
+                while current_wins_your < 2 and current_wins_comp < 2:
+                    word = Game(random.choice(dictionary))
+                    if game_logic(word):
+                        current_wins_your += 1
+                    else:
+                        current_wins_comp += 1
+
+                    current_stats_rights += word.rights
+                    current_stats += len(word.previous)
+                    current_game_number += 1
+
+                    print('По итогам предыдуших игр ваша статистика:\n\r'
+                          '    Угаданных букв:', current_stats_rights, '\n\r'
+                          '    Количество попыток:', current_stats)
+
+                if current_wins_your == 2:
+                    print('Вы смогли обыграть компьютер! Поздравляем!')
+                else:
+                    print('Вы проиграли компьютеру!')
+
+                print('Вы сыграли', current_game_number, 'игры')
 
             elif type_of_game == 2:
                 current_wins_one = 0
                 current_wins_two = 0
                 current_game_number = 0
+                current_stats_one = 0
+                current_stats_rights_one = 0
+                current_stats_two = 0
+                current_stats_rights_two = 0
 
                 while current_wins_one < 2 and current_wins_two < 2:
-                    if current_game_number % 2 == 0:
-                        word = Game(input('Первый игрок '
-                                          'загадывает слово: ').lower())
-                        if not word.is_english_word():
-                            print('Ошибка: Слово должно быть '
-                                  'на английском языке')
-                            continue
-                        if len(word.word) == 0:
-                            continue
-                        clear_console()
-                        print('Первый игрок загадал вам слово')
+                    current_player = int(current_game_number) % 2 + 1
+                    word = Game(input('Игрок №{} загадывает слово: '.format(
+                        current_player)).lower())
+                    if not word.is_english_word():
+                        print('Ошибка: Слово должно быть '
+                              'на английском языке')
+                        continue
+                    if len(word.word) == 0:
+                        continue
+                    clear_console()
+                    another_player = (int(current_game_number) + 1) % 2 + 1
+                    print('Игрок №', current_player, ' загадал вам слово.'
+                            '\n\r Игрок №', another_player, 'отгадывает слово.')
 
-                        if game_logic(word):
+                    if game_logic(word):
+                        if current_player == 1:
                             current_wins_two += 1
-                    else:
-                        word = Game(input('Второй игрок '
-                                          'загадывает слово: ').lower())
-                        if not word.is_english_word():
-                            print('Ошибка: Слово должно быть '
-                                  'на английском языке')
-                            continue
-                        if len(word.word) == 0:
-                            continue
-                        clear_console()
-                        print('Второй игрок загадал вам слово')
-
-                        if game_logic(word):
+                        else:
                             current_wins_one += 1
+
+                    else:
+                        if current_player == 1:
+                            current_wins_one += 1
+                        else:
+                            current_wins_two += 1
+
+                    if current_player == 1:
+                        current_stats_one += len(word.previous)
+                        current_stats_rights_one += word.rights
+                    else:
+                        current_stats_two += len(word.previous)
+                        current_stats_rights_two += word.rights
+
+                    print('\n\rПо итогам предыдуших игр статистика первого игрока:\n\r'
+                          '    Угаданных букв:', current_stats_rights_one, '\n\r'
+                          '    Количество попыток:', current_stats_one)
+                    print('\n\rПо итогам предыдуших игр статистика второго игрока:\n\r'
+                          '    Угаданных букв:', current_stats_rights_two, '\n\r'
+                          '    Количество попыток:', current_stats_two)
+
                     current_game_number += 1
                     print('Текущий счет:', current_wins_one,
                           ':', current_wins_two)
 
                 if current_wins_one == 2:
-                    print('Первый игрок победил')
+                    print('\n\r\n\rПервый игрок победил!')
+                else:
+                    print('Второй игрок победил!')
+
+                print('\n\r\n\rВы сыграли', current_game_number, 'игры')
 
             elif type_of_game == 3:
                 raise KeyboardInterrupt
