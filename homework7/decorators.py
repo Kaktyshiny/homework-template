@@ -17,11 +17,34 @@ def count_execution(func):
     gen = gen_count()
     print(next(gen))
 
-    return func(*args, **kwargs)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper()
+
 
 
 def catch(func):
     try:
-        print(func(*args, **kwargs))
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper()
     except Exception as e:
         print(e)
+
+@count_execution
+def some(value):
+    return value
+
+@count_execution
+def other():
+    return 5
+
+for i in range(10):
+    result = some(i)
+    print(result)
+
+
+result = other()
+print(result)
