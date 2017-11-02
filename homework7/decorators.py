@@ -1,6 +1,6 @@
 
 def cancel(func):
-    pass
+    return IndexError('{} is canceled!'.format(func.__name__))
 
 
 def count_execution(func):
