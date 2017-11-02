@@ -17,9 +17,8 @@ def random_increasing_number(start_from = 0):
 
 def next_day():
     i = 0
-    today = datetime.datetime.today().date()
+    today = datetime.today().day
 
     while True:
-        yield today
-        today = today + datetime.timedelta(days=i)
+        yield today + timedelta(days=i).days
         i += 1

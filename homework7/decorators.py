@@ -32,3 +32,9 @@ def catch(func):
         return wrapper
     except Exception as e:
         print(e)
+
+@catch
+def normal(text):
+    raise ValueError(text)
+
+print(normal('k'))
