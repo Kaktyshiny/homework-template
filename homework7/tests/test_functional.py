@@ -6,7 +6,7 @@ def test_modulo_five():
     lines = inspect.getsource(modulo_five)
 
     assert 'map(' in lines
-    assert modulo_five() == [1, 4, 0, 0]
+    assert modulo_five() == [1, 4, 0, 0, 4]
 
 
 def test_to_string():

@@ -8,4 +8,7 @@ def count_execution(func):
 
 
 def catch(func):
-    pass
+    try:
+        func()
+    except Exception as e:
+        print(e)
