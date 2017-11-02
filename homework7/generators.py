@@ -23,5 +23,3 @@ def next_day():
         yield today
         today = today + datetime.timedelta(days=i)
         i += 1
-
-
