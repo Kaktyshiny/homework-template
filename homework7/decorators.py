@@ -3,7 +3,7 @@ def cancel(func):
     def cancel_func():
         return '{} is canceled!'.format(func.__name__)
 
-    return cancel_func()
+    return ''
 
 
 def count_execution(func):
@@ -17,11 +17,11 @@ def count_execution(func):
     gen = gen_count()
     print(next(gen))
 
-    return func()
+    return func(*args, **kwargs)
 
 
 def catch(func):
     try:
-        func()
+        print(func(*args, **kwargs))
     except Exception as e:
         print(e)
