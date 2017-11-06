@@ -71,3 +71,12 @@ def test_capture_safe():
 
 def test_catch_normal(capsys):
     from homework7.decorators import catch
+
+    @catch
+    def normal(text):
+        raise ValueError(text)
+
+    message = 'test'
+    normal(message)
+    out, _ = capsys.readouterr()
+    assert out == message + '\n'

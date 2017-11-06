@@ -1,27 +1,23 @@
+import sys
 
 def cancel(func):
     def cancel_func():
-        return '{} is canceled!'.format(func.__name__)
+        return IndexError('{} is canceled!'.format(func.__name__))
 
-    return ''
+    return func
 
 
 def count_execution(func):
-    def gen_count():
-        count = 0
-        while True:
-            yield count
-            count += 1
+    func.count = 0
 
+    def _gen_count(*args, **kwargs):
+        func.count += 1
 
-    gen = gen_count()
-    print(next(gen))
+        print('Count is', func.count)
 
-    def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
-    return wrapper
-
+    return _gen_count
 
 
 def catch(func):
@@ -33,8 +29,4 @@ def catch(func):
     except Exception as e:
         print(e)
 
-@catch
-def normal(text):
-    raise ValueError(text)
-
-print(normal('k'))
+print(sys.getsizeof(''))
